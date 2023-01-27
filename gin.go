@@ -589,6 +589,15 @@ func (engine *Engine) HandleContext(c *Context) {
 	c.index = oldIndexValue
 }
 
+func (engine *Engine) HandleContextWithKeys(c *Context, keys map[string]any) {
+	oldIndexValue := c.index
+	c.reset()
+	c.Keys = keys
+	engine.handleHTTPRequest(c)
+
+	c.index = oldIndexValue
+}
+
 func (engine *Engine) handleHTTPRequest(c *Context) {
 	httpMethod := c.Request.Method
 	rPath := c.Request.URL.Path
